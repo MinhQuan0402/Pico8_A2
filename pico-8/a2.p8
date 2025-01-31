@@ -13,8 +13,6 @@ function _draw()
 	cls()
 	spr(1, p.x, p.y)
 end
-
-print("hello world")
 -->8
 player = {x=0,y=0}
 
