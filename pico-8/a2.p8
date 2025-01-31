@@ -1,46 +1,8 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
-function _init()
-	p = player:new(63,63)
-end
-
-function _update()
- p:movement()
-end
-
-function _draw()
-	cls()
-	spr(1, p.x, p.y)
-end
--->8
-player = {x=0,y=0}
-
-function player:new (x,y,o)
-		self.x = x
-		self.y = y
-  o = o or {}
-  setmetatable(o, self)
-  self.__index = self
-  return o
-end
-
-function player:movement ()
-  if btn(➡️) then
-  	self.x = self.x + 1
-  end
-  if btn(⬅️) then
-  	self.x = self.x - 1
-  end
-  
-  if btn(⬆️) then
-  	self.y = self.y - 1
-  end
-  if btn(⬇️) then
-  	self.y = self.y + 1
-  end
-end
-
+#INCLUDE main.LUA
+#INCLUDE player.LUA
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
