@@ -1,5 +1,5 @@
 function _init()
-	p = player:new(63,63)
+	p = Player:new(63, 63)
 end
 
 function _update()

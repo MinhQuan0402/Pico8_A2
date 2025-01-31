@@ -1,7 +1,6 @@
--->8
-player = {x=0,y=0}
+Player = {x=0,y=0}
 
-function player:new (x,y,o)
+function Player:new (x,y,o)
 		self.x = x
 		self.y = y
   o = o or {}
@@ -10,7 +9,7 @@ function player:new (x,y,o)
   return o
 end
 
-function player:movement ()
+function Player:movement ()
   if btn(➡️) then
   	self.x = self.x + 1
   end
