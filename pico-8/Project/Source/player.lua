@@ -1,14 +1,15 @@
 Player = {
   x = 0,
   y = 0,
-  fdirX = 1,
+  fdirX = 0,
   fdirY = 0,
   width = 0,
   height = 0,
   offsetX = 0,
-  offsetY = 0
+  offsetY = 0,
+  isFacingRight = true
 }
-Player._index = Player
+Player.__index = Player
 
 function Player:new (x , y, width, height, offsetX, offsetY)
   local instance = setmetatable({}, self)
@@ -18,27 +19,40 @@ function Player:new (x , y, width, height, offsetX, offsetY)
   instance.height = height
   instance.offsetX = offsetX
   instance.offsetY = offsetY
-  instance.fdirX = 1
+  instance.fdirX = 0
   instance.fdirY = 0
+  instance.isFacingRight = true
   return instance
 end
 
 function Player:movement ()
+  self.fdirX = 0
+  self.fdirY = 0
   if btn(➡️) then
-  	self.x = self.x + 1
+    self.fdirX = 1
   end
   if btn(⬅️) then
-  	self.x = self.x - 1
+    self.fdirX = -1
   end
   
   if btn(⬆️) then
-  	self.y = self.y - 1
+    self.fdirY = -1
   end
   if btn(⬇️) then
-  	self.y = self.y + 1
+    self.fdirY = 1
   end
+
+  if self.fdirX == 1 then
+    self.isFacingRight = true
+  end
+  if self.fdirX == -1 then
+    self.isFacingRight = false
+  end
+
+  self.x += self.fdirX * 1
+  self.y += self.fdirY * 1
 end
 
-function Player:_draw()
-  spr(1, self.x, self.y)
+function Player:render()
+  spr(1, self.x, self.y, 1, 1, self.isFacingRight)
 end
