@@ -25,16 +25,20 @@ end
 
 function Player:movement ()
   if btn(➡️) then
+    self.fdirX = 1;
   	self.x = self.x + 1
   end
   if btn(⬅️) then
+    self.fdirX = -1;
   	self.x = self.x - 1
   end
   
   if btn(⬆️) then
+    self.fdirY = -1;
   	self.y = self.y - 1
   end
   if btn(⬇️) then
+    self.fdirY = 1;
   	self.y = self.y + 1
   end
 end
