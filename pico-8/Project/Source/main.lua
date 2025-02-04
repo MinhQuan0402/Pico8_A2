@@ -3,10 +3,12 @@ function _init()
 end
 
 function _update()
- p:movement()
+	p:movement()
+	print(p.fdirX)
+	print(p.fdirY)
 end
 
 function _draw()
-	cls()
-	spr(1, p.x, p.y)
+	--cls()
+	--p:render()
 end

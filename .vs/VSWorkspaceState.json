@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\pico-8",
+    "\\pico-8\\Project",
+    "\\pico-8\\Project\\Source"
   ],
-  "SelectedNode": "\\C:\\Users\\happy\\OneDrive\\GitHub\\Pico8_A2",
+  "SelectedNode": "\\pico-8\\Project\\Source\\player.lua",
   "PreviewInSolutionExplorer": false
 }

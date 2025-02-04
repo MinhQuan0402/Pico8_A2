@@ -1,0 +1,76 @@
+pico-8 cartridge // http://www.pico-8.com
+version 42
+__lua__
+cplayer = {positionx=0, positiony=0}  --mq
+
+function cplayer:new(o) --mq
+	o = o or {}
+	setmetatable(o, self)
+	self._index = self
+	return o
+end
+
+function cplayer:move(x,y) --mq
+	self.positionx += x
+	self.positiony += y
+end
+
+function _init()
+	p = cplayer:new()
+  objs = {}
+  make_obj(0, 0, "wall", false, 1)
+end
+
+function _update()
+  update_objs()
+  if btn(➡️) then
+ 	  p:move(12,4)
+ end
+end
+
+function _draw()
+  cls()
+  render_objs()
+  spr(1, p.positionx, p.positiony)
+end
+
+function make_obj (x, y, spriteid, interactive, id) --dylan
+  local obj = {}
+    obj.x = x
+    obj.y = y
+    obj.spriteid = spriteid --use this as obj type
+    obj.interactive = interactive
+    obj.id = id
+    obj.steppedon = false
+  add(objs, obj)
+end
+
+function render_objs () --dylan
+  for obj in all(objs) do
+    spr(obj.spriteid, obj.x, obj.y)
+    
+  end
+end
+
+function update_objs () --dylan
+  for obj in all(objs) do
+    obj.x += 1
+    obj.y += 1
+    
+  end
+end
+
+function check_obj_collision(player_pos) --dylan
+  for obj in all(objs) do
+    --check each obj position to player postion
+    end
+end
+__gfx__
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00700700005555000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00077000005555000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00077000005555000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00700700005555000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+__sfx__
+000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000500005000050010500000000000000000000000000000000000000000000000000000000
