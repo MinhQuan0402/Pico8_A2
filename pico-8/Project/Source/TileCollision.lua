@@ -16,5 +16,9 @@ function Tile:new(x, y, width, height)
 end
 
 function Tile:render()
-   spr(65, self.posX, self.posY)
+   spr(65, self.posX, self.posY, 1, 1, true)
+end
+
+function Tile:CheckForCollision()
+    --if()
 end

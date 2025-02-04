@@ -7,7 +7,7 @@ Player = {
   height = 0,
   offsetX = 0,
   offsetY = 0,
-  currentSprite = 1
+  isFacingRight = true
 }
 Player.__index = Player
 
@@ -21,7 +21,7 @@ function Player:new (x , y, width, height, offsetX, offsetY)
   instance.offsetY = offsetY
   instance.fdirX = 0
   instance.fdirY = 0
-  instance.currentSprite = 1
+  instance.isFacingRight = true
   return instance
 end
 
@@ -42,16 +42,17 @@ function Player:movement ()
     self.fdirY = 1
   end
 
+  if self.fdirX == 1 then
+    self.isFacingRight = true
+  end
+  if self.fdirX == -1 then
+    self.isFacingRight = false
+  end
+
   self.x += self.fdirX * 1
   self.y += self.fdirY * 1
 end
 
 function Player:render()
-  if self.fdirX == 1 then
-    self.currentSprite = 1
-  end
-  if self.fdirX == -1 then
-    self.currentSprite = 2
-  end
-  spr(self.currentSprite, self.x, self.y)
+  spr(1, self.x, self.y, 1, 1, self.isFacingRight)
 end
