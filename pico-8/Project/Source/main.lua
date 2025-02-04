@@ -9,6 +9,6 @@ function _update()
 end
 
 function _draw()
-	--cls()
-	--p:render()
+	cls()
+	p:render()
 end
