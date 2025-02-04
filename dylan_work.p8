@@ -2,13 +2,13 @@ pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
 player = {
-  x = 0,
-  y = 0,
-  fdirx = 1,
+  x = 30,
+  y = 30,
+  fdirx = 0,
   fdiry = 0,
   width = 0,
   height = 0,
-  offsetx = 0,
+  offsetx = 1,
   offsety = 0
 }
 player._index = player
@@ -21,25 +21,32 @@ function player:new (x , y, width, height, offsetx, offsety)
   instance.height = height
   instance.offsetx = offsetx
   instance.offsety = offsety
-  instance.fdirx = 1
+  instance.fdirx = 0
   instance.fdiry = 0
   return instance
 end
 
+function player:reset_dir ()
+  self.fdirx = 0
+  self.fdiry = 0
+end
+
 function player:movement ()
   if btn(➡️) then
-  	self.x = self.x + 1
+  	self.fdirx = 1
   end
   if btn(⬅️) then
-  	self.x = self.x - 1
+  	self.fdirx = -1
   end
   
   if btn(⬆️) then
-  	self.y = self.y - 1
+  	self.fdiry = -1
   end
   if btn(⬇️) then
-  	self.y = self.y + 1
+  	self.fdiry = 1
   end
+  self.x += self.fdirx * 1
+  self.y += self.fdiry * 1
 end
 
 function player:_draw()
@@ -54,15 +61,16 @@ end
 
 function _update()
   --print_player_attributes()
+  player:reset_dir()
   update_objs()
-  p:movement()
+  player:movement()
   check_obj_collision()
 end
 
 function _draw()
   cls()
   render_objs()
-  p:render()
+  player:_draw()
 end
 
 function make_obj (x, y, width, height, spriteid, interactive, id, offsetx, offsety) --dylan
