@@ -39,6 +39,6 @@ function Player:movement ()
   end
 end
 
-function Player:_draw()
+function Player:render()
   spr(1, self.x, self.y)
 end
