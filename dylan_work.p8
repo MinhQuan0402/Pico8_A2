@@ -1,58 +1,53 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
---untitled
+player = {
+  x = 0,
+  y = 0,
+  fdirx = 1,
+  fdiry = 0,
+  width = 0,
+  height = 0,
+  offsetx = 0,
+  offsety = 0
+}
+player._index = player
 
-player = {x=0,y=0}
-
-function player:new (x,y,o)
-		self.x = x
-		self.y = y
-		self.width = 6
-		self.height = 7
-		self.offsetx = 0
-		self.offsety = 0
-		self.fdirx = 0
-		self.fdiry = 0
-  o = o or {}
-  setmetatable(o, self)
-  self.__index = self
-  return o
-end
-
-function print_player_attributes()
-  print(player.x)
-  print(player.y)
-  print(player.fdirx)
-  print(player.fdiry)
-  print(player.width)
-  print(player.height)
-  print(player.offsetx)
-  print(player.offsety)
+function player:new (x , y, width, height, offsetx, offsety)
+  local instance = setmetatable({}, self)
+  instance.x = x
+  instance.y = y
+  instance.width = width
+  instance.height = height
+  instance.offsetx = offsetx
+  instance.offsety = offsety
+  instance.fdirx = 1
+  instance.fdiry = 0
+  return instance
 end
 
 function player:movement ()
   if btn(➡️) then
   	self.x = self.x + 1
-  	self.fdirx = 1
   end
   if btn(⬅️) then
   	self.x = self.x - 1
-  	self.fdirx = -1
   end
   
   if btn(⬆️) then
   	self.y = self.y - 1
-  	self.fdiry = -1
   end
   if btn(⬇️) then
   	self.y = self.y + 1
-  	self.fdiry = 1
   end
 end
 
+function player:_draw()
+  spr(1, self.x, self.y)
+end
+
 function _init()
-	 player:new(63, 63)
+	 p = player:new(63, 63, 7, 6, 1, 0)
   objs = {}
   make_obj(40,40,6,6,0,false,1,0,0)
 end
@@ -60,14 +55,14 @@ end
 function _update()
   --print_player_attributes()
   update_objs()
-  player:movement()
+  p:movement()
   check_obj_collision()
 end
 
 function _draw()
   cls()
   render_objs()
-  spr(1, player.x, player.y)
+  p:render()
 end
 
 function make_obj (x, y, width, height, spriteid, interactive, id, offsetx, offsety) --dylan
@@ -106,18 +101,9 @@ end
 function check_obj_collision() --dylan
   for obj in all(objs) do
     --if player is colliding to left or right of obj then
-    if ((player.x+player.offsetx+player.width*0.5) >= (obj.x+obj.offsetx-obj.width*0.5)) & ((player.x+player.offsetx+player.width*0.5) <= (obj.x+obj.offsetx+obj.width*0.5)) then
+    if (((player.x+player.offsetx+player.width*0.5) >= (obj.x+obj.offsetx-obj.width*0.5)) and ((player.x+player.offsetx+player.width*0.5) <= (obj.x+obj.offsetx+obj.width*0.5))) or (((player.x+player.offsetx-player.width*0.5) >= (obj.x+obj.offsetx-obj.width*0.5)) and ((player.x+player.offsetx-player.width*0.5) <= (obj.x+obj.offsetx+obj.width*0.5))) and (((player.y+player.offsety+player.height*0.5) >= (obj.y+obj.offsety-obj.height*0.5)) and ((player.y+player.offsety+player.height*0.5) <= (obj.y+obj.offsety+obj.height*0.5))) or (((player.y+player.offsety-player.height*0.5) >= (obj.y+obj.offsety-obj.height*0.5)) and ((player.y+player.offsety-player.height*0.5) <= (obj.y+obj.offsety+obj.height*0.5))) then
       player.x += (player.x+player.offsetx+player.width*0.5-obj.x+obj.offsetx-obj.width*0.5) * -player.fdirx
-    end
-    if ((player.x+player.offsetx-player.width*0.5) >= (obj.x+obj.offsetx-obj.width*0.5)) & ((player.x+player.offsetx-player.width*0.5) <= (obj.x+obj.offsetx+obj.width*0.5)) then 
-      player.x += (player.x+player.offsetx-player.width*0.5-obj.x+obj.offsetx+obj.width*0.5) * -player.fdirx
-    end
-    --if player is colliding to bottom of obj then
-    if ((player.y+player.offsety+player.height*0.5) >= (obj.y+obj.offsety-obj.height*0.5)) & ((player.y+player.offsety+player.height*0.5) <= (obj.y+obj.offsety+obj.height*0.5)) then
-      player.y -= player.y+player.offsety+player.height*0.5-obj.y+obj.offsety-obj.height*0.5 * -player.fdiry
-    end
-    if ((player.y+player.offsety-player.height*0.5) >= (obj.y+obj.offsety-obj.height*0.5)) & ((player.y+player.offsety-player.height*0.5) <= (obj.y+obj.offsety+obj.height*0.5)) then 
-      player.y -= player.y+player.offsety-player.height*0.5-obj.y+obj.offsety+obj.height*0.5 * -player.fdiry
+      player.y += player.y+player.offsety+player.height*0.5-obj.y+obj.offsety-obj.height*0.5 * -player.fdiry
     end
   end
 end
