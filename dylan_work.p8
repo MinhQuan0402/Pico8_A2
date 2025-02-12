@@ -2,16 +2,17 @@ pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
 player = {
-  x = 30,
-  y = 30,
+  x = 0,
+  y = 0,
   fdirx = 0,
   fdiry = 0,
   width = 0,
   height = 0,
-  offsetx = 1,
-  offsety = 0
+  offsetx = 0,
+  offsety = 0,
+  isfacingright = true
 }
-player._index = player
+player.__index = player
 
 function player:new (x , y, width, height, offsetx, offsety)
   local instance = setmetatable({}, self)
@@ -23,45 +24,51 @@ function player:new (x , y, width, height, offsetx, offsety)
   instance.offsety = offsety
   instance.fdirx = 0
   instance.fdiry = 0
+  instance.isfacingright = true
   return instance
 end
 
-function player:reset_dir ()
+function player:movement ()
   self.fdirx = 0
   self.fdiry = 0
-end
-
-function player:movement ()
   if btn(➡️) then
-  	self.fdirx = 1
+    self.fdirx = 1
   end
   if btn(⬅️) then
-  	self.fdirx = -1
+    self.fdirx = -1
   end
   
   if btn(⬆️) then
-  	self.fdiry = -1
+    self.fdiry = -1
   end
   if btn(⬇️) then
-  	self.fdiry = 1
+    self.fdiry = 1
   end
+
+  if self.fdirx == 1 then
+    self.isfacingright = true
+  end
+  if self.fdirx == -1 then
+    self.isfacingright = false
+  end
+
   self.x += self.fdirx * 1
   self.y += self.fdiry * 1
 end
 
-function player:_draw()
-  spr(1, self.x, self.y)
+function player:render()
+  spr(1, self.x, self.y, 1, 1, self.isfacingright)
 end
 
 function _init()
 	 p = player:new(63, 63, 7, 6, 1, 0)
   objs = {}
   make_obj(40,40,6,6,0,false,1,0,0)
+  make_obj(20,20,6,6,0,true,2,0,0)
 end
 
 function _update()
   --print_player_attributes()
-  player:reset_dir()
   update_objs()
   player:movement()
   check_obj_collision()
@@ -70,7 +77,7 @@ end
 function _draw()
   cls()
   render_objs()
-  player:_draw()
+  player:render()
 end
 
 function make_obj (x, y, width, height, spriteid, interactive, id, offsetx, offsety) --dylan
@@ -97,21 +104,46 @@ end
 
 function update_objs () --dylan
   for obj in all(objs) do
-    print(obj.x)
-    print(obj.y)
-    print(obj.width)
-    print(obj.height)
-    print(obj.offsetx)
-    print(obj.offsety)
+    --do something
   end
 end
 
+
 function check_obj_collision() --dylan
-  for obj in all(objs) do
-    --if player is colliding to left or right of obj then
-    if (((player.x+player.offsetx+player.width*0.5) >= (obj.x+obj.offsetx-obj.width*0.5)) and ((player.x+player.offsetx+player.width*0.5) <= (obj.x+obj.offsetx+obj.width*0.5))) or (((player.x+player.offsetx-player.width*0.5) >= (obj.x+obj.offsetx-obj.width*0.5)) and ((player.x+player.offsetx-player.width*0.5) <= (obj.x+obj.offsetx+obj.width*0.5))) and (((player.y+player.offsety+player.height*0.5) >= (obj.y+obj.offsety-obj.height*0.5)) and ((player.y+player.offsety+player.height*0.5) <= (obj.y+obj.offsety+obj.height*0.5))) or (((player.y+player.offsety-player.height*0.5) >= (obj.y+obj.offsety-obj.height*0.5)) and ((player.y+player.offsety-player.height*0.5) <= (obj.y+obj.offsety+obj.height*0.5))) then
-      player.x += (player.x+player.offsetx+player.width*0.5-obj.x+obj.offsetx-obj.width*0.5) * -player.fdirx
-      player.y += player.y+player.offsety+player.height*0.5-obj.y+obj.offsety-obj.height*0.5 * -player.fdiry
+  for obj in all(objs) do 
+    if (((player.x+player.offsetx+player.width*0.5) >= (obj.x+obj.offsetx-obj.width*0.5)) and ((player.x+player.offsetx+player.width*0.5) <= (obj.x+obj.offsetx+obj.width*0.5)) or ((player.x+player.offsetx-player.width*0.5) >= (obj.x+obj.offsetx-obj.width*0.5)) and ((player.x+player.offsetx-player.width*0.5) <= (obj.x+obj.offsetx+obj.width*0.5))) and (((player.y+player.offsety+player.height*0.5) >= (obj.y+obj.offsety-obj.height*0.5)) and ((player.y+player.offsety+player.height*0.5) <= (obj.y+obj.offsety+obj.height*0.5)) or ((player.y+player.offsety-player.height*0.5) >= (obj.y+obj.offsety-obj.height*0.5)) and ((player.y+player.offsety-player.height*0.5) <= (obj.y+obj.offsety+obj.height*0.5))) then
+      if obj.interactive == false then
+        if player.fdirx != 0 then
+          player.x -= ((player.width * 0.5 + obj.width * 0.5) - abs(player.x - obj.x)) * player.fdirx
+        end
+        if player.fdiry != 0 then
+          player.y -= ((player.height * 0.5 + obj.height * 0.5) - abs(player.y - obj.y)) * player.fdiry
+        end
+      end
+      if obj.interactive == true then
+        if player.fdirx != 0 then
+          obj.x += ((player.width * 0.5 + obj.width * 0.5) - abs(player.x - obj.x)) * player.fdirx
+        end
+        if player.fdiry != 0 then
+          obj.y += ((player.height * 0.5 + obj.height * 0.5) - abs(player.y - obj.y)) * player.fdiry
+        end
+        for obj2 in all (objs) do
+          if obj2.id != obj.id then
+            if (((obj2.x+obj2.offsetx+obj2.width*0.5) >= (obj.x+obj.offsetx-obj.width*0.5)) and ((obj2.x+obj2.offsetx+obj2.width*0.5) <= (obj.x+obj.offsetx+obj.width*0.5)) or ((obj2.x+obj2.offsetx-obj2.width*0.5) >= (obj.x+obj.offsetx-obj.width*0.5)) and ((obj2.x+obj2.offsetx-obj2.width*0.5) <= (obj.x+obj.offsetx+obj.width*0.5))) and (((obj2.y+obj2.offsety+obj2.height*0.5) >= (obj.y+obj.offsety-obj.height*0.5)) and ((obj2.y+obj2.offsety+obj2.height*0.5) <= (obj.y+obj.offsety+obj.height*0.5)) or ((obj2.y+obj2.offsety-obj2.height*0.5) >= (obj.y+obj.offsety-obj.height*0.5)) and ((obj2.y+obj2.offsety-obj2.height*0.5) <= (obj.y+obj.offsety+obj.height*0.5))) then
+              if player.fdirx != 0 then
+                local distancex = ((obj.width * 0.5 + obj2.width * 0.5) - abs(obj2.x - obj.x)) * player.fdirx
+                obj.x -= distancex
+                player.x -= distancex
+              end
+              if player.fdiry != 0 then
+                local distancey = ((obj.height * 0.5 + obj2.height * 0.5) - abs(obj2.y - obj.y)) * player.fdiry
+                obj.y -= distancey
+                player.y -= distancey
+              end
+            end
+          end
+        end 
+      end
     end
   end
 end
