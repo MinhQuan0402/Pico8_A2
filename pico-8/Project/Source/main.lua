@@ -1,15 +1,47 @@
+local numTiles = 4
+local isReset = false
 function _init()
-	p = Player:new(78, 63, 7, 7, 0, 0)
-	tile1 = Tile:new(70, 63, 7, 7)
+	p = Player:new(0, 63, 7, 7, 0, 0)
+	tiles = {
+		Tile:new(70, 63, 7, 7), 
+		Tile:new(78, 63, 7, 7),
+		Tile:new(86, 63, 7, 7),
+		Tile:new(86, 71, 7, 7)
+	}
+	palt(14, true)
 end
 
 function _update()
 	p:movement()
-	tile1:CheckForCollision()
+	CheckTilesCollision()
 end
 
 function _draw()
 	cls()
-	tile1:render()
+	RenderTiles()
 	p:render()
+end
+
+function CheckTilesCollision()
+	for i=1, numTiles do
+		tiles[i]:CheckForCollision()
+
+		if(tiles[i].numTouch >= 2) then
+			isReset = true
+		end
+	end
+
+	if(isReset == true) then
+		for i=1, numTiles do
+			tiles[i].spriteIndex = 70
+			tiles[i].numTouch = 0
+		end
+		isReset = false
+	end
+end
+
+function RenderTiles()
+	for i=1, numTiles do
+		tiles[i]:render()
+	end
 end
