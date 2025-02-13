@@ -1,24 +1,91 @@
-local tilePlayerSpawnX = 0
-local tilePlayerSpawnY = 63
-local numTiles = 4
+local tilePlayerSpawnX = 2
+local tilePlayerSpawnY = 20
+local numTiles = 57
 local isReset = false
+local tileWidth = 6
+local tileHeight = 6
 function _init()
-	p = Player:new(0, 63, 7, 7, 0, 0)
+	p = Player:new(2, 20, 5, 5, 0, 0)
 	tiles = {
-		Tile:new(70, 63, 7, 7), 
-		Tile:new(78, 63, 7, 7),
-		Tile:new(86, 63, 7, 7),
-		Tile:new(86, 71, 7, 7)
+		Tile:new(38, 9, tileWidth, tileHeight),
+		Tile:new(44, 9, tileWidth, tileHeight),
+		Tile:new(50, 9, tileWidth, tileHeight),
+
+		Tile:new(26, 16, tileWidth, tileHeight),
+		Tile:new(32, 16, tileWidth, tileHeight), 
+		Tile:new(38, 16, tileWidth, tileHeight),
+		Tile:new(50, 16, tileWidth, tileHeight),
+		Tile:new(56, 16, tileWidth, tileHeight),
+		Tile:new(62, 16, tileWidth, tileHeight), 
+
+		Tile:new(14, 23, tileWidth, tileHeight),
+		Tile:new(20, 23, tileWidth, tileHeight),
+		Tile:new(26, 23, tileWidth, tileHeight),
+		Tile:new(32, 23, tileWidth, tileHeight), 
+		Tile:new(38, 23, tileWidth, tileHeight),
+		Tile:new(56, 23, tileWidth, tileHeight),
+		Tile:new(62, 23, tileWidth, tileHeight),
+
+		Tile:new(14, 30, tileWidth, tileHeight), 
+		Tile:new(20, 30, tileWidth, tileHeight),
+		Tile:new(26, 30, tileWidth, tileHeight),
+		Tile:new(32, 30, tileWidth, tileHeight),
+		Tile:new(56, 30, tileWidth, tileHeight), 
+		Tile:new(68, 30, tileWidth, tileHeight),
+
+		Tile:new(8,  37, tileWidth, tileHeight),
+		Tile:new(14, 37, tileWidth, tileHeight),
+		Tile:new(32, 37, tileWidth, tileHeight),
+		Tile:new(38, 37, tileWidth, tileHeight),
+		Tile:new(44, 37, tileWidth, tileHeight), 
+		Tile:new(56, 37, tileWidth, tileHeight),
+		Tile:new(62, 37, tileWidth, tileHeight),
+		Tile:new(68, 37, tileWidth, tileHeight),
+
+		Tile:new(8,  44, tileWidth, tileHeight),
+		Tile:new(14, 44, tileWidth, tileHeight),
+		Tile:new(20, 44, tileWidth, tileHeight), 
+		Tile:new(26, 44, tileWidth, tileHeight),
+		Tile:new(32, 44, tileWidth, tileHeight),
+		Tile:new(44, 44, tileWidth, tileHeight),
+		Tile:new(56, 44, tileWidth, tileHeight),
+		Tile:new(62, 44, tileWidth, tileHeight),
+		Tile:new(68, 44, tileWidth, tileHeight),
+		
+		Tile:new(8,  51, tileWidth, tileHeight), 
+		Tile:new(20, 51, tileWidth, tileHeight),
+		Tile:new(26, 51, tileWidth, tileHeight),
+		Tile:new(32, 51, tileWidth, tileHeight),
+		Tile:new(44, 51, tileWidth, tileHeight), 
+		Tile:new(50, 51, tileWidth, tileHeight),
+		Tile:new(56, 51, tileWidth, tileHeight),
+		Tile:new(62, 51, tileWidth, tileHeight),
+		Tile:new(68, 51, tileWidth, tileHeight), 
+		
+		Tile:new(32, 58, tileWidth, tileHeight),
+		Tile:new(38, 58, tileWidth, tileHeight),
+		Tile:new(62, 58, tileWidth, tileHeight),
+		
+		Tile:new(38, 65, tileWidth, tileHeight), 
+		Tile:new(44, 65, tileWidth, tileHeight),
+		Tile:new(50, 65, tileWidth, tileHeight),
+		Tile:new(56, 65, tileWidth, tileHeight),
+		Tile:new(62, 65, tileWidth, tileHeight),
+
+		Tile:new(38, 72, tileWidth, tileHeight),
+		Tile:new(44, 72, tileWidth, tileHeight)
 	}
 end
 
 function _update()
 	p:movement()
+	camera(p.x - 63, p.y - 63)
 	CheckTilesCollision()
 end
 
 function _draw()
-	cls()
+	cls(3)
+	palt(14, true)
 	RenderTiles()
 	p:render()
 end
@@ -37,7 +104,7 @@ function CheckTilesCollision()
 		p.x = tilePlayerSpawnX
 		p.y = tilePlayerSpawnY
 		for i=1, numTiles do
-			tiles[i].spriteIndex = 70
+			tiles[i].spriteIndex = 63
 			tiles[i].numTouch = 0
 		end
 		isReset = false

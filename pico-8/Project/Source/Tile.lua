@@ -3,7 +3,7 @@ Tile = {
     posY = 0,
     width = 1,
     height = 1,
-    spriteIndex = 70,
+    spriteIndex = 63,
     isTouchingTile = false,
     numTouch = 0
 }
@@ -15,7 +15,7 @@ function Tile:new(x, y, width, height)
     instance.posY = y
     instance.width = width or 1
     instance.height = height or 1
-    instance.spriteIndex = 70
+    instance.spriteIndex = 63
     instance.numTouch = 0
     instance.isTouchingTile = false
     return instance
@@ -35,7 +35,7 @@ function Tile:CheckForCollision()
     if(self.isTouchingTile == false and ((p.x + p.offsetX + playerHalfWidth >= self.posX - tileHalfWidth) and (p.x + p.offsetX - playerHalfWidth <= self.posX + tileHalfWidth) and
        (p.y + p.offsetY + playerHalfHeight >= self.posY - tileHalfHeight) and (p.y + p.offsetY - playerHalfHeight <= self.posY + tileHalfHeight))) then
        self.isTouchingTile = true
-       self.spriteIndex = 71
+       self.spriteIndex = 47
        self.numTouch += 1
     elseif (self.isTouchingTile == true and not ((p.x + p.offsetX + playerHalfWidth >= self.posX - tileHalfWidth) and (p.x + p.offsetX - playerHalfWidth <= self.posX + tileHalfWidth) and
        (p.y + p.offsetY + playerHalfHeight >= self.posY - tileHalfHeight) and (p.y + p.offsetY - playerHalfHeight <= self.posY + tileHalfHeight))) then
