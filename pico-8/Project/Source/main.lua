@@ -1,3 +1,5 @@
+local tilePlayerSpawnX = 0
+local tilePlayerSpawnY = 63
 local numTiles = 4
 local isReset = false
 function _init()
@@ -8,7 +10,6 @@ function _init()
 		Tile:new(86, 63, 7, 7),
 		Tile:new(86, 71, 7, 7)
 	}
-	palt(14, true)
 end
 
 function _update()
@@ -28,10 +29,13 @@ function CheckTilesCollision()
 
 		if(tiles[i].numTouch >= 2) then
 			isReset = true
+			break
 		end
 	end
 
 	if(isReset == true) then
+		p.x = tilePlayerSpawnX
+		p.y = tilePlayerSpawnY
 		for i=1, numTiles do
 			tiles[i].spriteIndex = 70
 			tiles[i].numTouch = 0

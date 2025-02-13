@@ -54,3 +54,8 @@ end
 function Player:render()
   spr(72, self.x, self.y, 1, 1, self.isFacingLeft)
 end
+
+function Player:setposition(x, y)
+  self.posX = x or 1
+  self.posY = y or 1
+end
