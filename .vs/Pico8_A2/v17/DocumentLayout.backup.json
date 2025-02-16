@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\happy\\OneDrive\\GitHub\\Pico8_A2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\happy\\OneDrive\\GitHub\\Pico8_A2\\dylan_work.p8||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:dylan_work.p8||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\happy\\OneDrive\\GitHub\\Pico8_A2\\pico-8\\Project\\Source\\player.lua||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pico-8\\Project\\Source\\player.lua||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\happy\\OneDrive\\GitHub\\Pico8_A2\\dylan_work.p8||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:dylan_work.p8||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,11 +18,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 231,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "dylan_work.p8",
               "DocumentMoniker": "C:\\Users\\happy\\OneDrive\\GitHub\\Pico8_A2\\dylan_work.p8",
               "RelativeDocumentMoniker": "dylan_work.p8",
@@ -35,13 +35,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "player.lua",
               "DocumentMoniker": "C:\\Users\\happy\\OneDrive\\GitHub\\Pico8_A2\\pico-8\\Project\\Source\\player.lua",
               "RelativeDocumentMoniker": "pico-8\\Project\\Source\\player.lua",
               "ToolTip": "C:\\Users\\happy\\OneDrive\\GitHub\\Pico8_A2\\pico-8\\Project\\Source\\player.lua",
               "RelativeToolTip": "pico-8\\Project\\Source\\player.lua",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-02-02T08:36:30.329Z",
               "EditorCaption": ""
